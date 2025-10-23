@@ -60,7 +60,7 @@ public class WebhookService {
             }
 
             DefaultBotOptions botOptions = new DefaultBotOptions();
-            DefaultAbsSender bot = new DefaultAbsSender(botOptions, token) {
+            DefaultAbsSender bot = new DefaultAbsSender(botOptions) {
                 @Override
                 public String getBotToken() {
                     return token;
