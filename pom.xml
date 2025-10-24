@@ -14,6 +14,7 @@
     <description>Backend for AlertsFrom.tv</description>
     <properties>
         <java.version>11</java.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
     <dependencies>
         <dependency>
