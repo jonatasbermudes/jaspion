@@ -32,6 +32,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
+        if (request.getRequestURI().startsWith("/v3/api-docs")
+                || request.getRequestURI().startsWith("/api-docs")
+                || request.getRequestURI().startsWith("/swagger-ui")
+                || request.getRequestURI().equals("/authenticate")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             username = jwtUtil.extractUsername(jwt);
