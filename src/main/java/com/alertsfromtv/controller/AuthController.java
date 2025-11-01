@@ -40,14 +40,19 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
+        if (usuarioRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("Error: Email is already taken!");
+        }
+
         Usuario newUser = new Usuario();
         newUser.setEmail(registerRequest.getEmail());
-        newUser.setSenha(passwordEncoder.encode(registerRequest.getPassword()));
+        newUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         usuarioRepository.save(newUser);
-        return ResponseEntity.ok("User registered successfully");
+
+        return ResponseEntity.ok("User registered successfully!");
     }
 
-    @PostMapping("/login")
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest) throws Exception {
         try {
             authenticationManager.authenticate(
