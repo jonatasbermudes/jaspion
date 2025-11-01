@@ -1,40 +1,10 @@
 package com.alertsfromtv.dto;
 
+import lombok.Data;
+
+@Data
 public class DestinoDto {
     private Long id;
     private String nome;
     private String chatId;
-
-    public DestinoDto() {
-    }
-
-    public DestinoDto(Long id, String nome, String chatId) {
-        this.id = id;
-        this.nome = nome;
-        this.chatId = chatId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(String chatId) {
-        this.chatId = chatId;
-    }
 }
