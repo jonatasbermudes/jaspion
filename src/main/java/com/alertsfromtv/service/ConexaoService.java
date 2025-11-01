@@ -22,7 +22,7 @@ import java.util.UUID;
 public class ConexaoService {
 
     @Autowired
-    private ConexaoWebhookRepository conexaoRepository;
+    private com.alertsfromtv.repository.ConexaoRepository conexaoRepository;
 
     @Autowired
     private BotTelegramRepository botRepository;
@@ -47,7 +47,12 @@ public class ConexaoService {
     }
 
     public List<ConexaoWebhook> getConexoesByUsuario(Usuario usuario) {
-        return conexaoRepository.findByUsuarioId(usuario.getId());
+        return conexaoRepository.findByUsuario(usuario);
+    }
+
+    public ConexaoWebhook getConexaoByIdAndUsuario(UUID id, Usuario usuario) {
+        return conexaoRepository.findByIdAndUsuario(id, usuario)
+                .orElseThrow(() -> new ResourceNotFoundException("Conexao not found with id " + id));
     }
 
     public ConexaoWebhook updateConexao(UUID id, ConexaoRequestDto conexaoDto, Usuario usuario) {

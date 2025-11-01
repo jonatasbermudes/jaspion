@@ -21,6 +21,6 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        return new User(usuario.getEmail(), usuario.getSenha(), new ArrayList<>());
+        return new User(usuario.getEmail(), usuario.getPassword(), new ArrayList<>());
     }
 }

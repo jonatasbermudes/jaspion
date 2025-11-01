@@ -1,33 +1,28 @@
 package com.alertsfromtv.entity;
 
-import lombok.Data;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import java.util.UUID;
-import org.hibernate.annotations.Type;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
-@Data
+import java.util.UUID;
+
 @Entity
 @Table(name = "conexoes_webhook")
 public class ConexaoWebhook {
     @Id
     @GeneratedValue(generator = "UUID")
-    @Type(type = "org.hibernate.type.PostgresUUIDType")
-    @Column(name = "id", updatable = false, nullable = false)
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(updatable = false, nullable = false)
     private UUID id;
 
     @Column(nullable = false)
     private String nome;
 
-    private boolean ativo = true;
+    private boolean ativo;
 
-    @Column(name = "template_mensagem")
+    @Column(length = 2048)
     private String templateMensagem;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,4 +36,72 @@ public class ConexaoWebhook {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destino_id", nullable = false)
     private DestinoTelegram destino;
+
+    public ConexaoWebhook() {
+    }
+
+    public ConexaoWebhook(String nome, boolean ativo, String templateMensagem, Usuario usuario, BotTelegram bot, DestinoTelegram destino) {
+        this.nome = nome;
+        this.ativo = ativo;
+        this.templateMensagem = templateMensagem;
+        this.usuario = usuario;
+        this.bot = bot;
+        this.destino = destino;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public String getTemplateMensagem() {
+        return templateMensagem;
+    }
+
+    public void setTemplateMensagem(String templateMensagem) {
+        this.templateMensagem = templateMensagem;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public BotTelegram getBot() {
+        return bot;
+    }
+
+    public void setBot(BotTelegram bot) {
+        this.bot = bot;
+    }
+
+    public DestinoTelegram getDestino() {
+        return destino;
+    }
+
+    public void setDestino(DestinoTelegram destino) {
+        this.destino = destino;
+    }
 }
